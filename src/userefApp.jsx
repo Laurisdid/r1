@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import './App.scss';
 import rand from './Functions/rand';
-
+// https://docs.google.com/document/d/1LhNWOMdpgUhY3ermLg7hOnf9Gk_xz-BlPyObdJBxkDk/edit
 function App() {
 
     const [kv, setKv] = useState(null);
