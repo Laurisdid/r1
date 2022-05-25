@@ -1,89 +1,66 @@
 import { useEffect, useRef, useState } from 'react';
 import './App.scss';
-import randColor from './Functions/randColor';
+import rand from './Functions/rand';
 
 function App() {
 
-    const [count, setCount] = useState(null);
     const [kv, setKv] = useState(null);
+    const istorija = useRef([]);
 
-    const mano = useRef(0);
-    const panda = useRef();
-
-    const addKv = () => {
-        setKv(k => [...k, randColor()]);
-    }
-
-    const remKv = () => {
-        setKv(k => k.slice(1));
-    }
-
+    // PIRMAS KROVIMAS
     useEffect(() => {
-        setKv(JSON.parse(localStorage.getItem('kv') ?? '[]'));
+        setKv(JSON.parse(localStorage.getItem('kv'))); // gali buti null arba []
     }, []);
 
+    // UZSAUGOS POKYCIUS
     useEffect(() => {
         if (null === kv) {
             return;
         }
         localStorage.setItem('kv', JSON.stringify(kv));
+        istorija.current.unshift(kv);
+        console.log(istorija.current)
     }, [kv]);
 
-    useEffect(() => {
-        setCount(parseInt(localStorage.getItem('count') ?? 0));
-    }, []);
 
-    useEffect(() => {
-        if (null === count) {
-            return;
+    const prideti = () => {
+        const kiekis = rand(5, 10);
+        const kvadratukai = [];
+        for (let i = 0; i < kiekis; i++) {
+            kvadratukai.push('^o^');
         }
-        localStorage.setItem('count', count);
-    }, [count]);
-
-
-
-    const add = () => {
-        setCount(c => c + 1);
-        mano.current = mano.current + 3;
-        console.log(mano.current);
-        // const p = document.querySelector('#panda');
-        const p = panda.current;
-        console.log(p.dataset.panda);
+        setKv(k =>
+             null === k ? [...kvadratukai] : [...k, ...kvadratukai]);
     }
 
-    const addCat = () => {
-        localStorage.setItem('katinukas', JSON.stringify(['Murka', 'Pilkis']));
+    const valyti=()=>{
+        setKv([]);
     }
 
-    const getCat = () => {
-        console.log(JSON.parse(localStorage.getItem('katinukas')));
+    const atgal =()=>{
+        if(istorija.current.length ===0){
+            setKv([])
+        }
+        setKv(istorija.current.shift());
+        console.log(istorija.current)
     }
-
-    const remCat = () => {
-        localStorage.removeItem('katinukas');
-    }
-
 
     return (
         <div className="App">
-          <header className="App-header">
-           <h1>useRef LocalStorage {count}</h1>
-           <button onClick={add}>+1</button>
-           <button onClick={addCat}>Add Cat</button>
-           <button onClick={getCat}>Get Cat</button>
-           <button onClick={remCat}>Remove Cat</button>
-           <div ref={panda} data-panda="miega"></div>
-           <button onClick={addKv}>ADD []</button>
-            <button onClick={remKv}>REMOVE []</button>
-            <div className="kvc">
-                {
-                    kv ? kv.map((c, i) => <div className="kv" key={i} style={{backgroundColor:c}}>{i}</div>) : null
-                }
-                </div>
-          </header>
-        </div>
-      );
+            <header className="App-header">
+                <h1>PRAKTIMUMAS</h1>
+                    <div className="kvc">
+                        {
+                            kv ? kv.map((k, i) => <div key={i} className="kv">{k}</div>) : null
+                        }
+                    </div>
 
+                <button onClick={prideti}>Pridėti</button>
+                <button onClick={valyti}>isvalyti</button>
+                <button onClick={atgal}>atgal</button>
+            </header>
+        </div>
+    );
 }
 
 export default App;

@@ -24,16 +24,30 @@ function App() {
   const remKv = () => {
     setKv(k => k.slice(1));
   }
-//   useEffect(() => {
-//     setKv(JSON.parse(localStorage.getItem('kv') ?? '[]'));
-// }, []);
 
-// useEffect(() => {
-//     if (null === kv) {
-//         return;
-//     }
-//     localStorage.setItem('kv', JSON.stringify(kv));
-// }, [kv]);
+  
+  useEffect(() => {
+    setKv(JSON.parse(localStorage.getItem('kv') ?? '[]'));
+}, []);
+
+useEffect(() => {
+    if (null === kv) {
+        return;
+    }
+    localStorage.setItem('kv', JSON.stringify(kv));
+}, [kv]);
+
+
+useEffect(() => {
+  setKv(JSON.parse(localStorage.getItem('rt') ?? '[]'));
+}, []);
+
+useEffect(() => {
+  if (null === rt) {
+      return;
+  }
+  localStorage.setItem('rt', JSON.stringify(rt));
+}, [rt]);
 
 
   return (
