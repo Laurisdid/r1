@@ -47,13 +47,13 @@ function App() {
         <div>[]</div>
         <div className="kvc">
           {
-            kv.map((c, i) => <div className="kv" key={i} style={{ backgroundColor: c }}>{i}</div>)
+            kv.map((c, i) => <div className="kv" key={i} style={{ backgroundColor: c }}>{"K0"+i}</div>)
           }
         </div>
         <div>O</div>
         <div className="kvc">
           {
-            rt.map((c, i) => <div className="rt" key={i} style={{ backgroundColor: c }}>{i}</div>)
+            rt.map((c, i) => <div className="rt" key={i} style={{ backgroundColor: c }}>{'A0'+i}</div>)
           }
         </div>
       </header>
