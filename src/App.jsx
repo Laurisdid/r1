@@ -19,7 +19,6 @@ function App() {
         }
         localStorage.setItem('kv', JSON.stringify(kv));
         istorija.current.unshift(kv);
-        console.log(istorija.current)
     }, [kv]);
 
 
@@ -29,21 +28,31 @@ function App() {
         for (let i = 0; i < kiekis; i++) {
             kvadratukai.push('^o^');
         }
-        setKv(k =>
-             null === k ? [...kvadratukai] : [...k, ...kvadratukai]);
+        setKv(k => null === k ? [...kvadratukai] : [...k, ...kvadratukai]);
     }
 
-    const valyti=()=>{
+    const isvalyti = () => {
         setKv([]);
     }
 
-    const atgal =()=>{
-        if(istorija.current.length ===0){
-            setKv([])
+    const atgal = () => {
+        let senas = istorija.current.shift();
+        if (!senas) {
+            setKv([]);
+        } else if (senas.length === kv.length) {
+            senas = istorija.current.shift();
+            if (!senas) {
+                setKv([]);
+            } else {
+                setKv(senas);
+            }
         }
-        setKv(istorija.current.shift());
-        console.log(istorija.current)
+        else {
+            setKv(senas);
+        }
+        
     }
+
 
     return (
         <div className="App">
@@ -56,8 +65,8 @@ function App() {
                     </div>
 
                 <button onClick={prideti}>Pridėti</button>
-                <button onClick={valyti}>isvalyti</button>
-                <button onClick={atgal}>atgal</button>
+                <button onClick={isvalyti}>Išvalyti</button>
+                <button onClick={atgal}>Atgal</button>
             </header>
         </div>
     );
