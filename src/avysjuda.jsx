@@ -19,7 +19,14 @@ function App() {
     }
 
     const go = id => {
-        setAvys(a => a.map(avis => avis.id === id ? {...avis, where: 'kirpykla'} : avis))
+        //setAvys(a => a.map(avis => avis.id === id ? {...avis, where: 'kirpykla'} : avis))   avis dedasi pagal ju buvusia vieta garde
+        setAvys(a=>{
+            const avis=a.filter(av=>av.id===id)[0];
+            avis.where='kirpykla';
+            const kitos=a.filter(av=>av.id!==id);
+            return[...kitos, avis]
+
+        })
     }
 
     return (
