@@ -1,41 +1,43 @@
-import { useState } from 'react';
-import './App.scss';
-import randColor from './Functions/randColor';
+import { useState } from "react";
+import "./App.scss";
+import rand from "./Functions/rand";
 // import { v4 as uuidv4 } from 'uuid'; https://docs.google.com/document/d/1m5Co9Lv-n7Mm3IXwsnhWmNaGvbRTImcpp52fCIjUHnk/edit
 
-
-
 function App() {
+  const [nr, setNr] = useState("");
+  console.log(nr);
 
-    const [text, setText] = useState('');
-    const [kv, setKv] = useState([]);
+  const [array, setArray] = useState([]);
 
-  
- const inputText = e => {
-        setText(e.target.value);
-        console.log(e.target.value)
+  const click = () => {
+    const copyArray = [...array];
+    for (let i = 0; i < nr; i++) {
+      copyArray.push("");
     }
+    setArray(copyArray);
+  };
 
-  
-
-
-    return (
-        <div className="App">
-            <header className="App-header">
-                <fieldset>
-                    <legend>TEXT</legend>
-                    <input type="text" onChange={inputText} value={text}></input>
-                </fieldset>
-                <button onClick={inputText}>ADD</button>
-                <div className="kvc">
-                
-                {
-                    kv ? kv.map((c, i) => <div className="kv" key={i} style={{backgroundColor:c}}>{i}</div>) : null
-                }
-                </div>
-            </header>
+  return (
+    <div className="App">
+      <header className="App-header">
+        <fieldset>
+          <input
+            type="text"
+            onChange={(e) => setNr(e.target.value)}
+            value={nr}
+          ></input>
+          <button onClick={click}>Pridek kv</button>
+        </fieldset>
+        <div className="kvc">
+          {array.map((a, i) => (
+            <div className="kv" key={a}>
+              {rand(100, 200)}
+            </div>
+          ))}
         </div>
-    );
+      </header>
+    </div>
+  );
 }
 
 export default App;
