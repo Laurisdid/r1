@@ -6,7 +6,7 @@ function App() {
 
     const [kv, setKv]=useState([]);
     const add=()=>{
-        setKv(k=>[...k,getId('KV')])
+        setKv(k=>[...k,{id:getId('KV')}])
     }
   
 
@@ -17,7 +17,7 @@ function App() {
             {/* <button onClick={remKv}>REMOVE []</button> */}
             <div className="kvc">
                 {
-                   kv.map((k, i) => <div className="kv" key={k.id}>{i.id}</div>)
+                   kv.map(k => <div  key={k.id} className="kv">{k.id}</div>)
                 }
                 </div>
           </header>
