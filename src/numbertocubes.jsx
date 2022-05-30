@@ -1,42 +1,36 @@
 import { useState } from "react";
 import "./App.scss";
 import rand from "./Functions/rand";
-//  https://docs.google.com/document/d/1m5Co9Lv-n7Mm3IXwsnhWmNaGvbRTImcpp52fCIjUHnk/edit
+// import { v4 as uuidv4 } from 'uuid'; https://docs.google.com/document/d/1m5Co9Lv-n7Mm3IXwsnhWmNaGvbRTImcpp52fCIjUHnk/edit
 
 function App() {
-    const [name, setName] = useState("")
-    const [kg, setKg] = useState("");
+    const [nr, setNr] = useState("");
 
     const [array, setArray] = useState([]);
 
     const click = () => {
         const copyArray = [...array];
-
-        copyArray.push([name, kg]);
-        console.log(name,kg)
+        for (let i = 0; i < nr; i++) {
+            copyArray.push("");
+        }
         setArray(copyArray);
     };
 
     return (
-        <div className="App">
+                <div className="App">
             <header className="App-header">
                 <fieldset>
                     <input
                         type="text"
-                        onChange={(e) => setName(e.target.value)}
-                        value={name}
-                    ></input>
-                    <input
-                        type="text"
-                        onChange={(e) => setKg(e.target.value)}
-                        value={kg}
+                        onChange={(e) => setNr(e.target.value)}
+                        value={nr}
                     ></input>
                     <button onClick={click}>Pridek kv</button>
                 </fieldset>
                 <div className="kvc">
-                    {array.map((k,i) => (
-                        <div className="kv" key={k}>
-                            {name + " "+ kg + " kg"}
+                    {array.map((a, i) => (
+                        <div className="kv" key={a}>
+                            {rand(100, 200)}
                         </div>
                     ))}
                 </div>
