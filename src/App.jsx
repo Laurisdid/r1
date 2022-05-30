@@ -1,48 +1,29 @@
-import { useState } from "react";
-import "./App.scss";
-import rand from "./Functions/rand";
-//  https://docs.google.com/document/d/1m5Co9Lv-n7Mm3IXwsnhWmNaGvbRTImcpp52fCIjUHnk/edit
+import { useState } from 'react';
+import './App.scss';
+import getId from './Functions/getId';
 
 function App() {
-    const [name, setName] = useState("")
-    const [kg, setKg] = useState("");
 
-    const [array, setArray] = useState([]);
-
-    const click = () => {
-        const copyArray = [...array];
-
-        copyArray.push([name, kg]);
-        console.log(name,kg)
-        setArray(copyArray);
-    };
+    const [kv, setKv]=useState([]);
+    const add=()=>{
+        setKv(k=>[...k,getId('KV')])
+    }
+  
 
     return (
         <div className="App">
-            <header className="App-header">
-                <fieldset>
-                    <input
-                        type="text"
-                        onChange={(e) => setName(e.target.value)}
-                        value={name}
-                    ></input>
-                    <input
-                        type="text"
-                        onChange={(e) => setKg(e.target.value)}
-                        value={kg}
-                    ></input>
-                    <button onClick={click}>Pridek kv</button>
-                </fieldset>
-                <div className="kvc">
-                    {array.map((k,i) => (
-                        <div className="kv" key={k}>
-                            {name + " "+ kg + " kg"}
-                        </div>
-                    ))}
+          <header className="App-header">
+          <button onClick={add}>ADD []</button>
+            {/* <button onClick={remKv}>REMOVE []</button> */}
+            <div className="kvc">
+                {
+                   kv.map((k, i) => <div className="kv" key={k.id}>{i.id}</div>)
+                }
                 </div>
-            </header>
+          </header>
         </div>
-    );
+      );
+
 }
 
 export default App;
