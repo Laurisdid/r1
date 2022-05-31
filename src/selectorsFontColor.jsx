@@ -32,7 +32,7 @@ function App() {
 
     return (
         <div className="App">
-            <header className="App-header" style={{background:select}}>
+            <header className="App-header" >
                 <fieldset>
                     <legend>TEXT</legend>
                     <input type="text" onChange={inputText} value={text}></input>
@@ -51,27 +51,27 @@ function App() {
                     </select>
                 </fieldset>
                 <fieldset>
-                    <legend>SELECT</legend>
+                    <legend>SELECT size</legend>
                     <select value={select1} onChange={e => setSelect1(e.target.value)}>
-                        <option value="one">Vienas</option>
-                        <option value="two">Du</option>
-                        <option value="tree">Trys</option>
-                        <option value="ten">Daug</option>
+                        <option value="40px">40</option>
+                        <option value="30px">30</option>
+                        <option value="20px">20</option>
+                        <option value="10px">10</option>
                     </select>
                 </fieldset>
                 <fieldset>
-                    <legend>SELECT</legend>
+                    <legend>SELECT font</legend>
                     <select value={select2} onChange={e => setSelect2(e.target.value)}>
-                        <option value="one">Vienas</option>
-                        <option value="two">Du</option>
-                        <option value="tree">Trys</option>
-                        <option value="ten">Daug</option>
+                        <option value="Arial">Arial</option>
+                        <option value="monospace">monospace</option>
+                        <option value="cursive">cursive</option>
+                        <option value="fantasy">fantasy</option>
                     </select>
                 </fieldset>
-            
+            <div style={{color:select, fontSize:select1, fontFamily:select2}}>{text}</div>
             </header>
         </div>
-    );
+    )
 }
 
 export default App;
