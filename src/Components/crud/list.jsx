@@ -1,14 +1,20 @@
-import { useState } from "react";
+// import { useState } from "react";
 
-function List() {
-   
-    
+import Ex from "./Ex";
+
+function List({exes, setDeleteData}) {
+
     return (
         <div className="card mt-4">
             <div className="card-header">
-                <h2>list of ex</h2>
+                <h2>List of Ex`es</h2>
             </div>
             <div className="card-body">
+                <ul className="list-group">
+                    {
+                    exes ? exes.map(ex => <Ex key={ex.id} ex={ex} setDeleteData={setDeleteData}></Ex>) : null
+                    }
+                </ul>
             </div>
         </div>
     );

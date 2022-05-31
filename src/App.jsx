@@ -1,29 +1,48 @@
-// import { useState } from 'react';
 import { useEffect, useState } from 'react';
 import './bootstrap.css';
+import './crud.scss';
 import Create from './Components/crud/Create';
-import List from './Components/crud/list';
+import List from './Components/crud/List';
+import { create, read, remove } from './Functions/localStorage';
+import Edit from './Components/crud/Edit';
 // import './App.scss';
-import getId from './Functions/getId';
-import { create } from './Functions/localStorage';
+
 
 
 function App() {
-    const [exes, setExes] = useState(null)
+
+    const [lastUpdate, setLastUpdate] = useState(Date.now());
+
+    const [exes, setExes] = useState(null);
+    const [modalData, setModalData]=useState(null);
 
     const [createData, setCreateData] = useState(null);
-    //read
-    useEffect(() => {
+    const [deleteData, setDeleteData] = useState(null);
 
-    }
-    )
+    //Read
+    useEffect(() => {
+        setExes(read());
+    }, [lastUpdate]);
+
+    // Create
     useEffect(() => {
         if (null === createData) {
-            return
+            return;
         }
         create(createData);
-        setExes(read());
-    }, [createData])
+        setLastUpdate(Date.now());
+
+    }, [createData]);
+
+    // Delete
+    useEffect(() => {
+        if (null === deleteData) {
+            return;
+        }
+        remove(deleteData);
+        setLastUpdate(Date.now());
+
+    }, [deleteData]);
 
     return (
         <>
@@ -33,10 +52,11 @@ function App() {
                         <Create setCreateData={setCreateData}></Create>
                     </div>
                     <div className="col-8">
-                        <List></List>
+                        <List exes={exes} setDeleteData={setDeleteData}></List>
                     </div>
                 </div>
             </div>
+            <Edit modalData={modalData}></Edit>
         </>
     );
 
