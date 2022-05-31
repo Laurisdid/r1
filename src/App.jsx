@@ -14,7 +14,7 @@ function App() {
     const [lastUpdate, setLastUpdate] = useState(Date.now());
 
     const [exes, setExes] = useState(null);
-    const [modalData, setModalData]=useState(null);
+    const [modalData, setModalData] = useState(null);
 
     const [createData, setCreateData] = useState(null);
     const [deleteData, setDeleteData] = useState(null);
@@ -52,11 +52,11 @@ function App() {
                         <Create setCreateData={setCreateData}></Create>
                     </div>
                     <div className="col-8">
-                        <List exes={exes} setDeleteData={setDeleteData}></List>
+                        <List exes={exes} setDeleteData={setDeleteData} setModalData={setModalData}></List>
                     </div>
                 </div>
             </div>
-            <Edit modalData={modalData}></Edit>
+            <Edit modalData={modalData} setModalData={setModalData}></Edit>
         </>
     );
 
