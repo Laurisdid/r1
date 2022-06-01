@@ -3,7 +3,7 @@ import './bootstrap.css';
 import './crud.scss';
 import Create from './Components/crud/Create';
 import List from './Components/crud/List';
-import { create, read, remove } from './Functions/localStorage';
+import { create, edit, read, remove } from './Functions/localStorage';
 import Edit from './Components/crud/Edit';
 // import './App.scss';
 
@@ -18,6 +18,7 @@ function App() {
 
     const [createData, setCreateData] = useState(null);
     const [deleteData, setDeleteData] = useState(null);
+    const [editData, setEditData] = useState(null);
 
     //Read
     useEffect(() => {
@@ -44,6 +45,16 @@ function App() {
 
     }, [deleteData]);
 
+    // Edit
+    useEffect(() => {
+        if (null === editData) {
+            return;
+        }
+        edit(editData);
+        setLastUpdate(Date.now());
+
+    }, [editData]);
+
     return (
         <>
             <div className="container">
@@ -56,7 +67,7 @@ function App() {
                     </div>
                 </div>
             </div>
-            <Edit modalData={modalData} setModalData={setModalData}></Edit>
+            <Edit setEditData={setEditData} modalData={modalData} setModalData={setModalData}></Edit>
         </>
     );
 
