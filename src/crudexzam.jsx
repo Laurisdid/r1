@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import './bootstrap.css';
 import './crud.scss';
-import Create from './Components/kolt/Create';
-import List from './Components/kolt/List';
+import Create from './Components/crud/Create';
+import List from './Components/crud/List';
 import { create, edit, read, remove } from './Functions/localStorage';
-import Edit from './Components/kolt/Edit';
+import Edit from './Components/crud/Edit';
 // import './App.scss';
 
 
