@@ -71,7 +71,7 @@ function Edit({ modalData, setModalData, setEditData }) {
                         </div>
                         <div className="form-group">
                             <label>is busy</label>
-                            <input type="text" className="form-control" readOnly value={modalData.status} />
+                            <input type="text" className="form-control" readOnly value={!Boolean(modalData.status)} />
                         </div>
                         <div className="form-group">
                             <label>Place</label>
