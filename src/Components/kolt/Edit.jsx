@@ -5,10 +5,11 @@ import date from "../../Functions/date";
 function Edit({ modalData, setModalData, setEditData }) {
 
 
-    const [id,setId]=useState('');
-    const [status,setStatus]=useState('0');
-    const [lastTime, setLastTime]=useState(date);
-    const [totalKm, setTotalKm]=useState('0');
+    const [addKm,setAddKm]=useState();
+    const [id, setId] = useState('');
+    const [status, setStatus] = useState('0');
+    const [lastTime, setLastTime] = useState(date);
+    const [totalKm, setTotalKm] = useState(0);
     const [name, setName] = useState('');
     const [type, setType] = useState('1');
     const [place, setPlace] = useState('Gamykla');
@@ -27,7 +28,7 @@ function Edit({ modalData, setModalData, setEditData }) {
     }, [modalData]);
 
     const handleEdit = () => {
-        const data = {name, type, place, id: modalData.id};
+        const data = { id,status,lastTime,totalKm,name, type, place, id: modalData.id };
         setEditData(data);
         setModalData(null);
     }
@@ -47,27 +48,30 @@ function Edit({ modalData, setModalData, setEditData }) {
                         </button>
                     </div>
                     <div className="modal-body">
-                    <div className="form-group">
+                        <div className="form-group">
                             <label>id</label>
-                            <input type="text" className="form-control" readonly value={modalData.id} />
+                            <input type="text" className="form-control" readOnly value={modalData.id} />
                         </div>
-                        
+
                         <div className="form-group">
                             <label>Regstraton code</label>
-                            <input type="text" className="form-control" readonly value={name} />
+                            <input type="text" className="form-control" readOnly value={name} />
                             <small className="form-text text-muted">registration Code.</small>
                         </div>
                         <div className="form-group">
                             <label>last date used/created</label>
-                            <input type="text" className="form-control" readonly value={lastTime} />
+                            <input type="text" className="form-control" readOnly value={lastTime} />
                         </div>
                         <div className="form-group">
                             <label>total km</label>
-                            <input type="text" className="form-control" readonly value={totalKm} />
+                            <input type="text" className="form-control" readOnly value={totalKm} />
+                            <label>add km</label>
+                            <input type="text" className="form-control" onChange={e => setAddKm(e.target.value)} value={addKm} />
+                            <button type="button" className="btn btn-outline-primary" onClick={()=>setTotalKm(parseFloat(addKm)+parseFloat(totalKm))}>ADD</button>
                         </div>
                         <div className="form-group">
                             <label>is busy</label>
-                            <input type="text" className="form-control" readonly value={modalData.status} />
+                            <input type="text" className="form-control" readOnly value={modalData.status} />
                         </div>
                         <div className="form-group">
                             <label>Place</label>
