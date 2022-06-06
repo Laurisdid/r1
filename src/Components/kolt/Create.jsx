@@ -1,6 +1,7 @@
 import { useState } from "react";
 import getId from "../../Functions/getId";
 import date from "../../Functions/date";
+import stringGen from "../../Functions/sringgen";
 
 function Create({setCreateData}) {
     
@@ -20,7 +21,7 @@ function Create({setCreateData}) {
         setStatus('0');
         setLastTime(date);
         setTotalKm(0);
-        setName('');
+        setName(stringGen(8));
         setType('1');
         setPlace('Gamykla');
     }
