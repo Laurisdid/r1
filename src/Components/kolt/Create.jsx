@@ -10,7 +10,7 @@ function Create({setCreateData}) {
     const [status,setStatus]=useState('0');
     const [lastTime, setLastTime]=useState(date);
     const [totalKm, setTotalKm]=useState(0);
-    const [name, setName] = useState('');
+    const [name, setName] = useState(stringGen(8));
     const [type, setType] = useState('1');
     const [place, setPlace] = useState('Gamykla');
 

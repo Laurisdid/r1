@@ -5,9 +5,11 @@ import Create from './Components/kolt/Create';
 import List from './Components/kolt/List';
 import { create, edit, read, remove } from './Functions/localStorage';
 import Edit from './Components/kolt/Edit';
+import Stats from './Components/kolt/Stats';
 // import './App.scss';
 
 
+// https://docs.google.com/document/d/18UPY3gFN-1xZ0okWMkFs8h2jESfgJDXKQ3-viMXBeS0/edit
 
 function App() {
 
@@ -68,6 +70,7 @@ function App() {
                 </div>
             </div>
             <Edit setEditData={setEditData} modalData={modalData} setModalData={setModalData}></Edit>
+            <Stats exes={exes}modalData={modalData} setModalData={setModalData}></Stats>
         </>
     );
 

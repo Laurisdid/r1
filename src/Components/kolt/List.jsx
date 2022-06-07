@@ -14,12 +14,12 @@ function List({exes, setDeleteData, setModalData}) {
                     <div>  <li className="list-group-item">
             <div className="item">
                 <div className="content">
-                    <b>id</b>
-                    <b>name</b>
-                    <b>lastTime</b>
-                    <b>totalKm</b>
-                    <b>status</b>
-                    <b>place</b>
+                    <b>id  .</b>
+                    <b>   name   . </b>
+                    <b> lastTime .</b>
+                    <b>totalKm  .</b>
+                    <b>status  .</b>
+                    <b>place  .</b>
                 </div>
             </div>
         </li></div>
