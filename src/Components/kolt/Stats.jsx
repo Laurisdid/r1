@@ -1,28 +1,18 @@
-import { useState } from "react";
-import Ex from "./Ex";
-
-
-function Stats(ex) {
-
-
-
-
-let sum
-let scut
-    return (
-        <div className="card mt-4">
-            <div className="card-header">
-                <h2>Statistic</h2>
-                <h3>{}</h3>
-            </div>
-            <h3>Total KM</h3>
-            <input readOnly value={sum}></input>
-            <h3>Total colts</h3>
-            <input readOnly value={scut}></input>
-            
-
-        </div>
-    );
+function Stats({ exes }) {
+  return (
+    <div className="card mt-4">
+      <div className="card-header">
+        <h2>Statistic</h2>
+        <h3>{}</h3>
+      </div>
+      <h3>Total KM</h3>
+      <span>
+        {exes?.reduce((sum, entry) => (sum += entry.totalKm), 0) ?? 0}
+      </span>
+      <h3>Total colts</h3>
+      <span>{exes?.length ?? 0}</span>
+    </div>
+  );
 }
 
 export default Stats;

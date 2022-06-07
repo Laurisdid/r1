@@ -24,7 +24,12 @@ function List({exes, setDeleteData, setModalData}) {
             </div>
         </li></div>
                     {
-                    exes ? exes.map(ex => <Ex key={ex.id} ex={ex} setDeleteData={setDeleteData} setModalData={setModalData}></Ex>) : null
+                    exes ? exes.map(ex => <Ex 
+                    key={ex.id} 
+                    ex={ex} 
+                    setDeleteData={setDeleteData} 
+                    setModalData={setModalData}
+                    ></Ex>) : null
                     }
                 </ul>
             </div>
