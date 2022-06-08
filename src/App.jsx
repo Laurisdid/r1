@@ -77,8 +77,11 @@ function App() {
         </div>
     );
 
-    
+    // paspaudus kvadratuka jis dingsta, paspaudus reset filter vel atsiranda,
 
+    //padaryt input lauka ir    i kuri irasius kvadratuko skaiciu ir paspaudus dar viena sukurta mygtuka kvadratukas su tuo skaicium isnyksta 
+
+    // padaryti gyva filtracija prideti inputa tipo range nuo 0 iki 9999 slankiojanti range turi iskarto filtruotis... filtras rodo maksimalu rodomu  kvadratuku skaiciu
 }
 
 export default App;
