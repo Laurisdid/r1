@@ -53,6 +53,13 @@ function App() {
         }
         listDispach(action);
     }
+    const bla = n => {
+        const action = {
+            type: 'bla',
+            payload:n
+        }
+        listDispach(action);
+    }
 
     return (
         <div className="App">
@@ -69,7 +76,7 @@ function App() {
                 </div>
                 <div className="kvc">
                     {
-                    list.map((o, i) => o.show ? <div key={i} className="kv" style={{backgroundColor:o.color}}><i>{o.number}</i></div> : null)
+                    list.map((o, i) => o.show ? <div key={i} className="kv" onClick={()=>bla(o.number)} style={{backgroundColor:o.color}}><i>{o.number}</i></div> : null)
                     }
                 </div>
 
@@ -77,7 +84,8 @@ function App() {
         </div>
     );
 
-    // paspaudus kvadratuka jis dingsta, paspaudus reset filter vel atsiranda,
+    // paspaudus kvadratuka jis dingsta, paspaudus reset filter vel atsiranda, bla jau transportuoja paspauta kvadrato nr
+    
 
     //padaryt input lauka ir    i kuri irasius kvadratuko skaiciu ir paspaudus dar viena sukurta mygtuka kvadratukas su tuo skaicium isnyksta 
 
