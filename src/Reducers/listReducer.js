@@ -43,6 +43,9 @@ function listReducer(state, action) {
         row:state.lenght
       }]
       break;
+      case"bla":
+      newState= 
+      break;
     default:
       newState = [...state];
   }
