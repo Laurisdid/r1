@@ -1,95 +1,82 @@
-import { useEffect, useReducer, useState } from 'react';
-import './App.scss';
-import colorReducer from './Reducers/colorReducer';
-import numberReducer from './Reducers/numberReducer';
-import rand from './Functions/rand';
- 
+import { useEffect, useState } from "react";
+import "./bootstrap.css";
+import "./crud.scss";
+import Create from "./Components/kolt/Create";
+import List from "./Components/kolt/List";
+import { create, edit, read, remove } from "./Functions/localStorage";
+import Edit from "./Components/kolt/Edit";
+import Stats from "./Components/kolt/Stats";
+// import './App.scss';
+
+// https://docs.google.com/document/d/18UPY3gFN-1xZ0okWMkFs8h2jESfgJDXKQ3-viMXBeS0/edit
+
 function App() {
-    const [color, dispachColor] = useReducer(colorReducer, 'yellow');
-    const [numb, dispachNumb] = useReducer(numberReducer, '0000');
-    const [numb2, setNumb2] = useState('#F8dd00');
-    const[h2,seth2]=useState();
-    const [colorInput, setColorInput] = useState('#F8dd00');
-    // const goPink = () => {
-    //     setColor('pink');
-    // }
+  const [lastUpdate, setLastUpdate] = useState(Date.now());
+  const [exes, setExes] = useState(null);
+  const [modalData, setModalData] = useState(null);
+  const [createData, setCreateData] = useState(null);
+  const [deleteData, setDeleteData] = useState(null);
+  const [editData, setEditData] = useState(null);
 
-    const goPink = () => {
-        const action = {
-            type: 'go_pink'
-        }
-        dispachColor(action);
+  //Read
+  useEffect(() => {
+    setExes(read());
+  }, [lastUpdate]);
 
+  // Create
+  useEffect(() => {
+    if (null === createData) {
+      return;
     }
+    create(createData);
+    setLastUpdate(Date.now());
+  }, [createData]);
 
-    const goYellow = () => {
-        const action = {
-            type: 'go_y'
-        }
-        dispachColor(action);
+  // Delete
+  useEffect(() => {
+    if (null === deleteData) {
+      return;
     }
+    remove(deleteData);
+    setLastUpdate(Date.now());
+  }, [deleteData]);
 
-    const goChange = () => {
-        const action = {
-            type: 'change_color'
-        }
-        dispachColor(action);
+  // Edit
+  useEffect(() => {
+    if (null === editData) {
+      return;
     }
+    edit(editData);
+    setLastUpdate(Date.now());
+  }, [editData]);
 
-    const goChangeTo = () => {
-        const action = {
-            type: 'change_color_to',
-            payload: colorInput
-        }
-        dispachColor(action);
-    }
-
-    const number1 = () => {
-        const action = {
-            type: 'do1'
-        }
-        dispachNumb(action);
-    }
-
-    const number2 = () => {
-        const action = {
-            type: 'do2',
-            payload: rand(0, 100)
-        }
-        dispachNumb(action);
-    }
-    const gotext=()=>{
-        seth2(numb2)
-    }
-
-    // useEffect(() => {
-    //     setInterval(()=> dispachColor({type: 'change_color'}), 3000)
-    // }, [])
-    
-    return (
-        <div className="App">
-          <header className="App-header">
-           <h1 style={{backgroundColor: color}}>Welcome to Reducer
-           <span> {numb} </span>
-           </h1>
-           <h2>{h2}</h2>
-            <div className="kvc">
-            <button onClick={goPink}>Go pink</button>
-            <button onClick={goYellow}>Go yellow</button>
-            <button onClick={goChange}>Go and Change</button>
-            <button onClick={goChangeTo}>Go and Change to this</button>
-            <input type="color" value={colorInput} onChange={e => setColorInput(e.target.value)}></input>
-            </div>
-            <div className="kvc">
-            <button onClick={number1}>Go One</button>
-            <button onClick={number2}>Go Two</button>
-            </div>
-            <input value={numb2}onChange={e => setNumb2(e.target.value)}></input>
-            <button onClick={gotext}>go </button>
-          </header>
+  return (
+    <>
+      <div className="container">
+        <div className="row">
+          <div className="col-4">
+            <Create setCreateData={setCreateData}></Create>
+          </div>
+          <div className="col-8">
+            <List
+              exes={exes}
+              setDeleteData={setDeleteData}
+              setModalData={setModalData}
+            ></List>
+          </div>
         </div>
-      );
-
+      </div>
+      <Edit
+        setEditData={setEditData}
+        modalData={modalData}
+        setModalData={setModalData}
+      ></Edit>
+      <Stats
+        exes={exes}
+        modalData={modalData}
+        setModalData={setModalData}
+      ></Stats>
+    </>
+  );
 }
-
 export default App;
