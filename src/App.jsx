@@ -1,82 +1,84 @@
-import { useEffect, useState } from "react";
-import "./bootstrap.css";
-import "./crud.scss";
-import Create from "./Components/kolt/Create";
-import List from "./Components/kolt/List";
-import { create, edit, read, remove } from "./Functions/localStorage";
-import Edit from "./Components/kolt/Edit";
-import Stats from "./Components/kolt/Stats";
-// import './App.scss';
+import { useReducer } from 'react';
+import './App.scss';
+import randColor from './Functions/randColor';
+import listReducer from './Reducers/listReducer';
 
-// https://docs.google.com/document/d/18UPY3gFN-1xZ0okWMkFs8h2jESfgJDXKQ3-viMXBeS0/edit
 
 function App() {
-  const [lastUpdate, setLastUpdate] = useState(Date.now());
-  const [exes, setExes] = useState(null);
-  const [modalData, setModalData] = useState(null);
-  const [createData, setCreateData] = useState(null);
-  const [deleteData, setDeleteData] = useState(null);
-  const [editData, setEditData] = useState(null);
 
-  //Read
-  useEffect(() => {
-    setExes(read());
-  }, [lastUpdate]);
+    const [list, listDispach] = useReducer(listReducer, []);
 
-  // Create
-  useEffect(() => {
-    if (null === createData) {
-      return;
+    const newList = () => {
+        const action = {
+            type: 'new'
+        }
+        listDispach(action);
     }
-    create(createData);
-    setLastUpdate(Date.now());
-  }, [createData]);
 
-  // Delete
-  useEffect(() => {
-    if (null === deleteData) {
-      return;
+    const sortList = () => {
+        const action = {
+            type: 'sort'
+        }
+        listDispach(action);
     }
-    remove(deleteData);
-    setLastUpdate(Date.now());
-  }, [deleteData]);
 
-  // Edit
-  useEffect(() => {
-    if (null === editData) {
-      return;
+    const f5000 = () => {
+        const action = {
+            type: 'f5000'
+        }
+        listDispach(action);
     }
-    edit(editData);
-    setLastUpdate(Date.now());
-  }, [editData]);
 
-  return (
-    <>
-      <div className="container">
-        <div className="row">
-          <div className="col-4">
-            <Create setCreateData={setCreateData}></Create>
-          </div>
-          <div className="col-8">
-            <List
-              exes={exes}
-              setDeleteData={setDeleteData}
-              setModalData={setModalData}
-            ></List>
-          </div>
+    const f4000 = () => {
+        const action = {
+            type: 'f4000'
+        }
+        listDispach(action);
+    }
+    const filt = () => {
+        const action = {
+            type: 'filt'
+        }
+        listDispach(action);
+    }
+    const back = () => {
+        const action = {
+            type: 'back'
+        }
+        listDispach(action);
+    }
+    const add = () => {
+        const action = {
+            type: 'add'
+        }
+        listDispach(action);
+    }
+
+    return (
+        <div className="App">
+            <header className="App-header">
+                <h1>REDUCER</h1>
+                <div className="kvc">
+                <button onClick={newList}>New List</button>
+                <button onClick={sortList}>Sort List</button>
+                <button onClick={f5000}>Filter more 5000</button>
+                <button onClick={f4000}>Filter less 4000</button>
+                <button onClick={filt}>show all</button>
+                <button onClick={back}>back</button>
+                <button onClick={add}>add</button>
+                </div>
+                <div className="kvc">
+                    {
+                    list.map((o, i) => o.show ? <div key={i} className="kv" style={{backgroundColor:o.color}}><i>{o.number}</i></div> : null)
+                    }
+                </div>
+
+            </header>
         </div>
-      </div>
-      <Edit
-        setEditData={setEditData}
-        modalData={modalData}
-        setModalData={setModalData}
-      ></Edit>
-      <Stats
-        exes={exes}
-        modalData={modalData}
-        setModalData={setModalData}
-      ></Stats>
-    </>
-  );
+    );
+
+    
+
 }
+
 export default App;
