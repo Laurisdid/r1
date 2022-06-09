@@ -5,11 +5,11 @@ function listReducer(state, action) {
   let newState;
   switch (action.type) {
     case "new":
-      newState = [...Array(10)].map((_,i) => ({
+      newState = [...Array(10)].map((_, i) => ({
         number: ("" + rand(0, 9999)).padStart(4, 0),
         color: randColor(),
         show: true,
-        row:i
+        row: i
       }));
       // newState = [];
       // for (let i = 0; i < 10; i++) {
@@ -23,29 +23,34 @@ function listReducer(state, action) {
         return 0;
       });
       break;
+      case "DefSortList":
+        newState = [...state].sort((a, b) => a.row - b.row);
+        break;
     case "f5000":
         newState = state.map(o => o.number > 5000 ? {...o, show: true} : {...o, show: false} )
       break;
     case "f4000":
         newState = state.map(o => o.number < 4000 ? {...o, show: true} : {...o, show: false} )
       break;
-      case"filt":
-      newState = state.map(o =>( {...o, show: true}))
+    case "freset":
+        newState = state.map(o => ({...o, show: true}) )
       break;
-      case"back":
-      newState=[...state].sort((a,b)=>a.row-b.row)
+    case "hide":
+      
+        newState = state.map(o => o.number == action.payload ? {...o, show: false} : {...o} )
       break;
-      case "add":
-      newState=[...state,{
-        number: ("" + rand(0, 9999)).padStart(4, 0),
-        color: '#000000',
-        show: true,
-        row:state.lenght
-      }]
+      case "range":
+        console.log('go', action.payload)
+        newState = state.map(o => o.number > action.payload ? {...o, show: true} : {...o, show: false} )
       break;
-      case"bla":
-      newState= 
-      break;
+    case 'add': 
+        newState = [...state, {
+            number: ("" + rand(0, 9999)).padStart(4, 0),
+            color: '#000000',
+            show: true,
+            row: state.length
+          }];
+          break;
     default:
       newState = [...state];
   }
