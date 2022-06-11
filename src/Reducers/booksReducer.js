@@ -2,7 +2,7 @@ function booksReducer(state, action) {
   let newState;
   switch (action.type) {
     case "get_from_server":
-      newState = action.payload.map((b, i) => ({ ...b, row: i }));
+      newState = action.payload.map((b, i) => ({ ...b, row: i,show:true }));
       break;
     case "sortAZ":
       newState = [...state].sort((a, b) => {
@@ -12,15 +12,21 @@ function booksReducer(state, action) {
       });
       break;
     case "sort17":
-      newState = [...state].map((a) => a.type < 3 ? { ...a, show: true } : { ...a, show: false } );
+      newState = [...state].map((a) => a.price < 13 ? { ...a, show: true } : { ...a, show: false } );
       break;
     case "hide":
-      console.log(action.payload);
-      newState = [...state].map((o) => o.id === action.payload ?  { ...o, show: false } : { ...o, show: true } );
-      console.log(...state)
+   //   console.log(action.payload,'payload');
+      newState = [...state].map((b) => b.id === action.payload ? {...b, show: false} : {...b, show: true} )
       break;
     case "sortDEF":
-      newState = [...state].sort((a, b) => a.row - b.row);
+      newState = [...state].sort((a, b) => a.row - b.row );
+      break;
+      case "reset":
+      newState =[...state].map((a) => ({ ...a, show:true }));
+      break;
+      case "kaina":
+     //   console.log('payload', action.payload)
+        newState = state.map(o => o.price < action.payload ? {...o, show: true} : {...o, show: false} )
       break;
     default:
       newState = [...state];

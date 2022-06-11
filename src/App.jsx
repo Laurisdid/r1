@@ -1,12 +1,13 @@
 import "./App.scss";
 import axios from "axios";
-import { useEffect, useReducer } from "react";
+import { useEffect, useReducer, useState, useRef } from "react";
 import randColor from "./Functions/randColor";
 import booksReducer from "./Reducers/booksReducer";
 
 function App() {
   const [books, dispachBooks] = useReducer(booksReducer, []);
-
+  const [kaina, setKaina] = useState("0");
+  const doKaina = useRef(true);
   useEffect(() => {
     axios.get("http://in3.dev/knygos/").then((res) => {
       const action = {
@@ -35,13 +36,33 @@ function App() {
     };
     dispachBooks(action);
   };
-  const bla = n => {
+  const reset = () => {
     const action = {
-        type: 'hide',
-        payload: n
-    }
+      type: "reset",
+    };
     dispachBooks(action);
-}
+  };
+  const bla = (n) => {
+    const action = {
+      type: "hide",
+      payload: n,
+    };
+    dispachBooks(action);
+  };
+
+  useEffect(() => {
+    if (!doKaina.current) {
+      return;
+    }
+    doKaina.current = false;
+    setTimeout(() => (doKaina.current = true), 1);
+
+    const action = {
+      type: "kaina",
+      payload: kaina,
+    };
+    dispachBooks(action);
+  }, [kaina]);
 
   return (
     <div className="App">
@@ -49,25 +70,37 @@ function App() {
         <h1 style={{ backgroundColor: randColor() }}>Welcome to Class</h1>
         <div>
           <div>
-            <button>rusuioti</button>
+            <button onClick={reset}>unhide</button>
             <button onClick={sortAZ}>Sort AZ</button>
-            <button onClick={sort17}>Sort 17</button>
+            <button onClick={sort17}>Sort less then 13</button>
             <button onClick={sortDEF}>Reset Sort</button>
           </div>
-          <div> </div>
+          <div className="kvc">
+            <h2>{kaina} Eur</h2>
+            <input
+              type="range"
+              min="0"
+              max="20"
+              onChange={(e) => setKaina(e.target.value)}
+              value={kaina}
+            ></input>
+          </div>
+          <div></div>
         </div>
-        <div>
+        <div >
           {" "}
           {books.length ? (
-            books.map((b) => (
-              <div onClick={() => bla(b.id)} style={{ backgroundColor: randColor() }} key={b.id}>
-                {b.title} <i>{b.price} EUR</i>
-                <div>
-                  <img src={b.img} alt="a"></img>
-                  <div>author : {b.author}</div>
-                </div>
-              </div>
-            ))
+            books.map((b, i) =>
+              b.show ? (
+                <p style={{ width: "24%",display:"inline-block" }} onClick={() => bla(b.id)} key={i}>
+                  {b.title} <i>{b.price} EUR</i>
+                  <div style={{ backgroundColor: randColor() }}>
+                    <img src={b.img} alt="a"></img>
+                    <div>author : {b.author}</div>
+                  </div>
+                </p>
+              ) : null
+            )
           ) : (
             <h2>Loading...</h2>
           )}
