@@ -12,14 +12,12 @@ function booksReducer(state, action) {
       });
       break;
     case "sort17":
-      newState = [...state].map((a, c) =>
-        c.type < 3 ? { ...c, show: true } : { ...a, show: false }
-      );
+      newState = [...state].map((a) => a.type < 3 ? { ...a, show: true } : { ...a, show: false } );
       break;
     case "hide":
       console.log(action.payload);
-      newState = [...state].map(o => o.id == action.payload ? {...o, show: false} : {...o} )
-      console.log(state)
+      newState = [...state].map((o) => o.id === action.payload ?  { ...o, show: false } : { ...o, show: true } );
+      console.log(...state)
       break;
     case "sortDEF":
       newState = [...state].sort((a, b) => a.row - b.row);
