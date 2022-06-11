@@ -26,7 +26,14 @@ function booksReducer(state, action) {
       break;
       case "kaina":
      //   console.log('payload', action.payload)
-        newState = state.map(o => o.price < action.payload ? {...o, show: true} : {...o, show: false} )
+        newState = [...state].map(o => o.price < action.payload ? {...o, show: true} : {...o, show: false} )
+      break;
+      case "sortPrice":
+      newState = [...state].sort((a, b) => {
+        if (a.price > b.price) return 1;
+        if (b.price > a.price) return -1;
+        return 0;
+      });
       break;
     default:
       newState = [...state];

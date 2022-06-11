@@ -63,6 +63,12 @@ function App() {
     };
     dispachBooks(action);
   }, [kaina]);
+  const sortPrice = () => {
+    const action = {
+      type: "sortPrice",
+    };
+    dispachBooks(action);
+  };
 
   return (
     <div className="App">
@@ -72,6 +78,7 @@ function App() {
           <div>
             <button onClick={reset}>unhide</button>
             <button onClick={sortAZ}>Sort AZ</button>
+            <button onClick={sortPrice}>Sort price</button>
             <button onClick={sort17}>Sort less then 13</button>
             <button onClick={sortDEF}>Reset Sort</button>
           </div>
