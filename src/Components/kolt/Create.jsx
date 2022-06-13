@@ -9,13 +9,13 @@ function Create({setCreateData}) {
     const [id,setId]=useState('');
     const [status,setStatus]=useState('0');
     const [lastTime, setLastTime]=useState(date);
-    const [totalKm, setTotalKm]=useState(0);
+    const [totalKm, setTotalKm]=useState(parseFloat(0));
     const [name, setName] = useState(stringGen(8));
     const [type, setType] = useState('1');
     const [place, setPlace] = useState('Gamykla');
 
     const handleCreate = () => {
-        const data = {id,status,lastTime,totalKm,name, type, place};
+        const data = {id,status,lastTime,totalKm:parseFloat(totalKm),name, type, place};
         setCreateData(data);
         setId('');
         setStatus('0');
@@ -39,7 +39,7 @@ function Create({setCreateData}) {
                 </div>
                 <div className="form-group">
                     <label>Rida</label>
-                    <input type="text" className="form-control"  onChange={e => setTotalKm(e.target.value)} value={totalKm} />
+                    <input type="text" className="form-control"  onChange={e => setTotalKm(e.target.value)} value={parseFloat(totalKm)} />
                     <small className="form-text text-muted">Enter Rida here.</small>
                 </div>
                 <div className="form-group">
