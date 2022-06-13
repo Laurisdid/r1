@@ -35,6 +35,10 @@ function booksReducer(state, action) {
         return 0;
       });
       break;
+      case "reload":
+        newState = [...state].map((b, i) => ({ ...b, row: i,show:true }));
+        break;
+
     default:
       newState = [...state];
   }

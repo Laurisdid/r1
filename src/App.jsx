@@ -8,6 +8,7 @@ function App() {
   const [books, dispachBooks] = useReducer(booksReducer, []);
   const [kaina, setKaina] = useState("0");
   const doKaina = useRef(true);
+
   useEffect(() => {
     axios.get("http://in3.dev/knygos/").then((res) => {
       const action = {
@@ -69,6 +70,13 @@ function App() {
     };
     dispachBooks(action);
   };
+  const reload = () => {
+    const action = {
+      type: "reload",
+    };
+    dispachBooks(action);
+  };
+  
 
   return (
     <div className="App">
@@ -81,6 +89,7 @@ function App() {
             <button onClick={sortPrice}>Sort price</button>
             <button onClick={sort17}>Sort less then 13</button>
             <button onClick={sortDEF}>Reset Sort</button>
+            <button onClick={reload} >reload books</button>
           </div>
           <div className="kvc">
             <h2>{kaina} Eur</h2>
@@ -104,6 +113,7 @@ function App() {
                   <div style={{ backgroundColor: randColor() }}>
                     <img src={b.img} alt="a"></img>
                     <div>author : {b.author}</div>
+                    <div>category : {b.type}</div>
                   </div>
                 </p>
               ) : null
