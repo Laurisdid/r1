@@ -1,13 +1,27 @@
-// import { useState } from "react";
-
+import coltReducer from "../../Reducers/coltReducer";
+import { useReducer } from "react";
 import Ex from "./Ex";
 
 function List({exes, setDeleteData, setModalData}) {
+    const [colts, dispachColt] = useReducer(coltReducer, []);
 
+    const sortkm = () => {
+        const action = {
+          type: "sortKm",
+        };
+        dispachColt(action);
+      };
+      const reload = () => {
+        const action = {
+          type: "reload",
+        };
+        dispachColt(action);
+      };
+      
     return (
         <div className="card mt-4">
             <div className="card-header">
-                <h2>List of COLT</h2>
+                <h2>List of COLT</h2><button>sort by id</button><button onClick={sortkm}>sort by km</button><button onClick={reload}>reload</button>
             </div>
             <div className="card-body">
                 <ul className="list-group">
