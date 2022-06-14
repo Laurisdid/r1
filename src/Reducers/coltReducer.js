@@ -8,6 +8,7 @@ function coltReducer(state, action) {
               if (b.id > a.id) return -1;
               return 0;
             });
+            break;
         case "sortKm":
         newState = [...state].sort((a, b) => {
           if (a.totalKm > b.totalKm) return 1;
