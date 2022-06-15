@@ -1,108 +1,46 @@
-import { useEffect, useState } from "react";
-import coltReducer from "../src/Reducers/coltReducer";
-import { useReducer } from "react";
-import "./bootstrap.css";
-import "./crud.scss";
-import Create from "./Components/kolt/Create";
-import List from "./Components/kolt/List";
-import { create, edit, read, remove } from "./Functions/localStorage";
-import Edit from "./Components/kolt/Edit";
-import Stats from "./Components/kolt/Stats";
-// import './App.scss';
 
-// https://docs.google.com/document/d/18UPY3gFN-1xZ0okWMkFs8h2jESfgJDXKQ3-viMXBeS0/edit
+import { useReducer } from 'react';
+import ld from './Reducers/ld';
+import './App.scss';
+
+const masyvas = [
+    {id:3, name: 'Peter', bid: 487.77, date: '2022-06-01T10:37'},
+    {id:7, name: 'Mary', bid: 125.33, date: '2022-06-01T11:37'},
+    {id:8, name: 'Ūkas', bid: 78.25, date: '2022-06-01T09:22'},
+    {id:9, name: 'Petras Dainorius', bid: 487.77, date: '2022-06-01T08:13'}
+];
 
 function App() {
-  const [lastUpdate, setLastUpdate] = useState(Date.now());
-  const [exes, setExes] = useState(null);
-  const [modalData, setModalData] = useState(null);
-  const [createData, setCreateData] = useState(null);
-  const [deleteData, setDeleteData] = useState(null);
-  const [editData, setEditData] = useState(null);
 
-  const [colts, dispachColt] = useReducer(coltReducer, []);
-
-    const sortkm = () => {
-        const action = {
-          type: "sortKm",
-        };
-        dispachColt(action);
-      };
-      const sortID = () => {
-        const action = {
-          type: "sortID",
-        };
-        dispachColt(action);
-      };
-      const reload = () => {
-        const action = {
-          type: "reload",
-        };
-        dispachColt(action);
-      };
-  //Read
-  useEffect(() => {
-    setExes(read());
-  }, [lastUpdate]);
-
-  // Create
-  useEffect(() => {
-    if (null === createData) {
-      return;
-    }
-    create(createData);
-    setLastUpdate(Date.now());
-  }, [createData]);
-
-  // Delete
-  useEffect(() => {
-    if (null === deleteData) {
-      return;
-    }
-    remove(deleteData);
-    setLastUpdate(Date.now());
-  }, [deleteData]);
-
-  // Edit
-  useEffect(() => {
-    if (null === editData) {
-      return;
-    }
-    edit(editData);
-    setLastUpdate(Date.now());
-  }, [editData]);
+const [list,setList]=useReducer(ld,masyvas)
 
   return (
-    <>
-      <div className="container">
-        <div className="row">
-          <div className="col-4">
-            <Create setCreateData={setCreateData}></Create>
-          </div>
-          <div className="col-8">
-            
-            <List
-              exes={exes}
-              setDeleteData={setDeleteData}
-              setModalData={setModalData}
-            ></List>     <div>
-               <button type="button" className="btn" onClick={sortID}>sort by id</button><button  type="button" className="btn" onClick={sortkm}>sort by km</button><button  type="button" className="btn" onClick={reload}>reload</button>
-               </div>
-          </div>
-        </div>
-      </div>
-      <Edit
-        setEditData={setEditData}
-        modalData={modalData}
-        setModalData={setModalData}
-      ></Edit>
-      
-      <Stats
-        exes={exes}
-        modalData={modalData}
-        setModalData={setModalData}
-      ></Stats>
-    </>
+    <div className="App">
+      <header className="App-header">
+       <h1>Random sort</h1>
+       <select>
+        <option value="date_asc">date asc</option>
+        <option value="date_desc">date desc</option>
+        <option value="bid_asc">bid asc</option>
+        <option value="bid_desc">bid desc</option>
+        <option value="name_asc">name asc</option>
+        <option value="name_desc">name desc</option>
+        <option value="random">random</option>
+
+       </select>
+       {
+        list.map(b=>(
+            <div classname='kvc'>
+                <span>id:{b.id}</span>
+                <span>name:{b.name}</span>
+                <span>bid:{b.bid}</span>
+                <span>date:{b.date}</span>
+            </div>
+        ))
+       }
+      </header>
+    </div>
   );
 }
+
 export default App;
