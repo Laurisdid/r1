@@ -1,117 +1,130 @@
-import { useEffect, useState } from "react";
-import coltReducer from "./Reducers/coltReducer";
-import { useReducer } from "react";
-import "./bootstrap.css";
-import "./crud.scss";
-import Create from "./Components/kolt/Create";
-import List from "./Components/kolt/List";
-import { create, edit, read, remove } from "./Functions/localStorage";
-import Edit from "./Components/kolt/Edit";
-import Stats from "./Components/kolt/Stats";
-// import './App.scss';
-
-// https://docs.google.com/document/d/18UPY3gFN-1xZ0okWMkFs8h2jESfgJDXKQ3-viMXBeS0/edit
+import "./App.scss";
+import axios from "axios";
+import { useEffect, useReducer, useState, useRef } from "react";
+import randColor from "./Functions/randColor";
+import booksReducer from "./Reducers/booksReducer";
 
 function App() {
-  const [lastUpdate, setLastUpdate] = useState(Date.now());
-  const [exes, setExes] = useState(null);
-  const [modalData, setModalData] = useState(null);
-  const [createData, setCreateData] = useState(null);
-  const [deleteData, setDeleteData] = useState(null);
-  const [editData, setEditData] = useState(null);
+  const [books, dispachBooks] = useReducer(booksReducer, []);
+  const [kaina, setKaina] = useState("0");
+  const doKaina = useRef(true);
 
-  const [colts, dispachColt] = useReducer(coltReducer, []);
-
-  
   useEffect(() => {
-    colts.length >0 && setExes(colts)
-  }, [colts])
-
-  const sortkm = () => {
+    axios.get("http://in3.dev/knygos/").then((res) => {
+      const action = {
+        payload: res.data,
+        type: "get_from_server",
+      };
+      console.log(res.data);
+      dispachBooks(action);
+    });
+  }, []);
+  const sortAZ = () => {
     const action = {
-      type: "sortKm",
-      payload: exes,
-
+      type: "sortAZ",
     };
-    dispachColt(action);
+    dispachBooks(action);
   };
-  const sortID = () => {
+  const sort17 = () => {
     const action = {
-      type: "sortID",
-      payload: exes,
-
+      type: "sort17",
     };
-    dispachColt(action);
+    dispachBooks(action);
+  };
+  const sortDEF = () => {
+    const action = {
+      type: "sortDEF",
+    };
+    dispachBooks(action);
+  };
+  const reset = () => {
+    const action = {
+      type: "reset",
+    };
+    dispachBooks(action);
+  };
+  const bla = (n) => {
+    const action = {
+      type: "hide",
+      payload: n,
+    };
+    dispachBooks(action);
+  };
+
+  useEffect(() => {
+    if (!doKaina.current) {
+      return;
+    }
+    doKaina.current = false;
+    setTimeout(() => (doKaina.current = true), 1);
+
+    const action = {
+      type: "kaina",
+      payload: kaina,
+    };
+    dispachBooks(action);
+  }, [kaina]);
+  const sortPrice = () => {
+    const action = {
+      type: "sortPrice",
+    };
+    dispachBooks(action);
   };
   const reload = () => {
     const action = {
       type: "reload",
-      payload: exes,
     };
-    dispachColt(action);
+    dispachBooks(action);
   };
-  useEffect(() => {
-    setExes(read());
-  }, [lastUpdate]);
-
-  // Create
-  useEffect(() => {
-    if (null === createData) {
-      return;
-    }
-    create(createData);
-    setLastUpdate(Date.now());
-  }, [createData]);
-
-  // Delete
-  useEffect(() => {
-    if (null === deleteData) {
-      return;
-    }
-    remove(deleteData);
-    setLastUpdate(Date.now());
-  }, [deleteData]);
-
-  // Edit
-  useEffect(() => {
-    if (null === editData) {
-      return;
-    }
-    edit(editData);
-    setLastUpdate(Date.now());
-  }, [editData]);
+  
 
   return (
-    <>
-      <div className="container">
-        <div className="row">
-          <div className="col-4">
-            <Create setCreateData={setCreateData}></Create>
+    <div className="App">
+      <header className="App-header">
+        <h1 style={{ backgroundColor: randColor() }}>Welcome to Class</h1>
+        <div>
+          <div>
+            <button onClick={reset}>unhide</button>
+            <button onClick={sortAZ}>Sort AZ</button>
+            <button onClick={sortPrice}>Sort price</button>
+            <button onClick={sort17}>Sort less then 13</button>
+            <button onClick={sortDEF}>Reset Sort</button>
+            <button onClick={reload} >reload books</button>
           </div>
-          <div className="col-8">
-            <button onClick={reload}>RR</button>
-            <button onClick={sortID}>Sort id</button>
-            <button onClick={sortkm}>Sort km</button>
-            <List
-              exes={exes}
-              setDeleteData={setDeleteData}
-              setModalData={setModalData}
-            ></List>
+          <div className="kvc">
+            <h2>{kaina} Eur</h2>
+            <input
+              type="range"
+              min="0"
+              max="20"
+              onChange={(e) => setKaina(e.target.value)}
+              value={kaina}
+            ></input>
           </div>
+          <div></div>
         </div>
-      </div>
-      <Edit
-        setEditData={setEditData}
-        modalData={modalData}
-        setModalData={setModalData}
-      ></Edit>
-
-      <Stats
-        exes={exes}
-        modalData={modalData}
-        setModalData={setModalData}
-      ></Stats>
-    </>
+        <div >
+          {" "}
+          {books.length ? (
+            books.map((b, i) =>
+              b.show ? (
+                <p style={{ width: "24%",display:"inline-block" }} onClick={() => bla(b.id)} key={i}>
+                  {b.title} <i>{b.price} EUR</i>
+                  <div style={{ backgroundColor: randColor() }}>
+                    <img src={b.img} alt="a"></img>
+                    <div>author : {b.author}</div>
+                    <div>category : {b.type}</div>
+                  </div>
+                </p>
+              ) : null
+            )
+          ) : (
+            <h2>Loading...</h2>
+          )}
+        </div>
+      </header>
+    </div>
   );
 }
+
 export default App;

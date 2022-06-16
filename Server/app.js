@@ -16,7 +16,7 @@ app.use(
     host: "localhost",
     user: "root",
     password: "",
-    database: "lam",
+    database: "lama",
   });
 
 //ROUTES
